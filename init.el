@@ -36,6 +36,7 @@
 
 (defun enocc-center-document ()
   "centers document with equal block margin"
+  (interactive)
   (setq visual-fill-column-width 80
 	visual-fill-column-center-text t)
   (visual-line-mode 1)
