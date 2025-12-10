@@ -1,5 +1,5 @@
 ;; Emacs Init File
-;; Last Update: 2025-12-09
+;; Last Update: 2025-12-10
 ;; Pablo Enoc
 
 ;; Set Window Size on Launch
@@ -9,11 +9,11 @@
 (setq mac-option-modifier nil)
 
 ;; Font Family - Menlo 14pt - Line Spacing 0.25
-(set-face-attribute 'default nil :family "Menlo" :height 140)
+(set-face-attribute 'default nil :family "Monaco" :height 140)
 (setq-default line-spacing 0.25)
 
-;; Theme: Somnus
-(load-theme 'somnus t)
+;; Theme: Cappuccino Noir
+(load-theme 'cappuccino-noir t)
 
 ;; Disable Splash Screen
 (setq inhibit-startup-message t)
@@ -49,3 +49,17 @@
 (add-hook 'org-mode-hook #'enocc-center-document)
 
 
+;; Configs
+
+;; Elfeed
+
+(setq elfeed-feeds
+      '("https://thatalexguy.dev/feed.xml"))
+
+(add-hook 'elfeed-show-mode-hook
+	  (lambda ()
+	    (setq shr-width 70)
+	    (variable-pitch-mode 1)
+	    (set-face-attribute 'variable-pitch (selected-frame)
+				:family "Helvetica"
+				:height 120)))
