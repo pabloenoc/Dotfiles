@@ -8,7 +8,7 @@
 ;; Option Key lets me write in Spanish on macOS
 (setq mac-option-modifier nil)
 
-;; Font Family - Menlo 14pt - Line Spacing 0.25
+;; Font Family - Monaco 14pt - Line Spacing 0.25
 (set-face-attribute 'default nil :family "Monaco" :height 140)
 (setq-default line-spacing 0.25)
 
