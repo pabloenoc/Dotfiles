@@ -8,8 +8,8 @@
 ;; Option Key lets me write in Spanish on macOS
 (setq mac-option-modifier nil)
 
-;; Font Family - Monaco 14pt - Line Spacing 0.25
-(set-face-attribute 'default nil :family "Monaco" :height 140)
+;; Font Family - Menlo 14pt - Line Spacing 0.25
+(set-face-attribute 'default nil :family "Menlo" :height 140)
 (setq-default line-spacing 0.25)
 
 ;; Theme: Cappuccino Noir
@@ -56,10 +56,27 @@
 (setq elfeed-feeds
       '("https://thatalexguy.dev/feed.xml"))
 
+(add-hook 'elfeed-search-mode-hook
+	  (lambda()
+	    (setq elfeed-search-filter "@1-month-ago +unread")
+	    (setq elfeed-search-date-format '("%m/%d" 7 :left))
+	    (display-line-numbers-mode -1)
+	    (elfeed-search-update :force)))
+
 (add-hook 'elfeed-show-mode-hook
 	  (lambda ()
-	    (setq shr-width 70)
+	    (setq shr-width 60)
+	    (display-line-numbers-mode -1)
 	    (variable-pitch-mode 1)
 	    (set-face-attribute 'variable-pitch (selected-frame)
-				:family "Helvetica"
-				:height 120)))
+				:family "Arial"
+				:height 130)))
+
+;; test
+
+(add-to-list 'display-buffer-alist
+             '("\\*Help\\*"
+               (display-buffer-in-side-window)
+               (side . top)
+               (slot . 0)
+               (window-height . 0.5)))
