@@ -1,0 +1,5 @@
+#+title: Dotfiles
+
+** init.el
+
+This is my current Emacs base init file across devices. 
