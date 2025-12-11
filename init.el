@@ -8,12 +8,12 @@
 ;; Option Key lets me write in Spanish on macOS
 (setq mac-option-modifier nil)
 
-;; Font Family - Menlo 14pt - Line Spacing 0.25
+;; Text Rendering
 (set-face-attribute 'default nil :family "Menlo" :height 140)
 (setq-default line-spacing 0.25)
 
-;; Theme: Cappuccino Noir
-(load-theme 'cappuccino-noir t)
+;; Theme
+(load-theme 'somnus t)
 
 ;; Disable Splash Screen
 (setq inhibit-startup-message t)
@@ -54,7 +54,11 @@
 ;; Elfeed
 
 (setq elfeed-feeds
-      '("https://thatalexguy.dev/feed.xml"))
+      '("https://thatalexguy.dev/feed.xml"
+	"https://nullprogram.com/feed/"
+	"https://halloumithoughts.bearblog.dev/feed/"))
+
+(setq browse-url-browser-function #'eww-browse-url)
 
 (add-hook 'elfeed-search-mode-hook
 	  (lambda()
@@ -68,9 +72,11 @@
 	    (setq shr-width 60)
 	    (display-line-numbers-mode -1)
 	    (variable-pitch-mode 1)
+	    (setq left-margin-width 4)
+	    (setq line-spacing 0.3)
 	    (set-face-attribute 'variable-pitch (selected-frame)
 				:family "Arial"
-				:height 130)))
+				:height 140)))
 
 ;; test
 
@@ -80,3 +86,5 @@
                (side . top)
                (slot . 0)
                (window-height . 0.5)))
+
+
