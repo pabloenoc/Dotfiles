@@ -1,5 +1,5 @@
 ;; Emacs Init File
-;; Last Update: 2025-12-10
+;; Last Update: 2025-12-11
 ;; Pablo Enoc
 
 ;; Set Window Size on Launch
@@ -13,7 +13,10 @@
 (setq-default line-spacing 0.25)
 
 ;; Theme
-(load-theme 'somnus t)
+(setq leuven-scale-outline-headlines nil)
+(setq leuven-scale-org-document-title nil)
+(load-theme 'leuven t)
+
 
 ;; Disable Splash Screen
 (setq inhibit-startup-message t)
@@ -27,14 +30,23 @@
 ;; Hide details in Dired mode
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 
+;; Vertico
+(vertico-mode 1)
+
+;; Line numbers
+(add-hook 'ruby-mode-hook
+	  (lambda ()
+	    (display-line-numbers-mode 1)))
+
+
 ;; Custom Functions
 
-(defun enocc-iso-date-insert ()
+(defun enocc/iso-date-insert ()
   "inserts current date in YYYY-MM-DD format"
   (interactive)
   (insert (format-time-string "%Y-%m-%d")))
 
-(defun enocc-center-document ()
+(defun enocc/center-document ()
   "centers document with equal block margin"
   (interactive)
   (setq visual-fill-column-width 80
@@ -45,25 +57,46 @@
 ;; Apply enocc-center-document function
 ;; to Org Mode and Markdown Mode for prose writing
 
-(add-hook 'markdown-mode-hook #'enocc-center-document)
-(add-hook 'org-mode-hook #'enocc-center-document)
+(add-hook 'markdown-mode-hook #'enocc/center-document)
+(add-hook 'org-mode-hook #'enocc/center-document)
 
 
 ;; Configs
+
+;; eww
+
+(defun enocc/eww-browse-in-external-browser()
+  "Open the EWW link at point in the default external browser, or the current link if no link beneath cursor."
+  (interactive)
+  (let ((url (or (get-text-property (point) 'shr-url)
+		 (eww-current-url))))
+    (browse-url-default-browser url)))
+
+(add-hook 'eww-mode-hook
+	  (lambda ()
+	    (setq shr-width 60)
+	    (setq left-margin-width 4)
+	    (when (get-buffer-window)
+	      (set-window-margins (get-buffer-window) left-margin-width (window-margins (get-buffer-window))))
+	    local-set-key (kbd "B") #'enocc/eww-browse-in-external-browser()))
+
+    
 
 ;; Elfeed
 
 (setq elfeed-feeds
       '("https://thatalexguy.dev/feed.xml"
 	"https://nullprogram.com/feed/"
-	"https://halloumithoughts.bearblog.dev/feed/"))
+	"https://halloumithoughts.bearblog.dev/feed/"
+	"https://ploum.net/atom.xml"
+	"https://protesilaos.com/master.xml"))
 
 (setq browse-url-browser-function #'eww-browse-url)
 
 (add-hook 'elfeed-search-mode-hook
 	  (lambda()
 	    (setq elfeed-search-filter "@1-month-ago +unread")
-	    (setq elfeed-search-date-format '("%m/%d" 7 :left))
+	    (setq elfeed-search-date-format '("%b %d" 10 :left))
 	    (display-line-numbers-mode -1)
 	    (elfeed-search-update :force)))
 
@@ -78,13 +111,12 @@
 				:family "Arial"
 				:height 140)))
 
-;; test
+;; Test to display Help buffer below current buffer
+;; Reference from Prot: https://youtu.be/1-UIzYPn38s?si=TeMSeXCPk2tJM3hP
 
 (add-to-list 'display-buffer-alist
              '("\\*Help\\*"
                (display-buffer-in-side-window)
-               (side . top)
+               (side . bottom)
                (slot . 0)
                (window-height . 0.5)))
-
-
