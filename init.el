@@ -77,8 +77,9 @@
 	    (setq shr-width 60)
 	    (setq left-margin-width 4)
 	    (when (get-buffer-window)
-	      (set-window-margins (get-buffer-window) left-margin-width (window-margins (get-buffer-window))))
-	    local-set-key (kbd "B") #'enocc/eww-browse-in-external-browser()))
+	      (set-window-margins (get-buffer-window)
+				  left-margin-width (window-margins (get-buffer-window))))
+	    (local-set-key (kbd "B" #' enocc/eww-browse-in-external-browser))))
 
     
 
