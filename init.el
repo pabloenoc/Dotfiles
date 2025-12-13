@@ -72,8 +72,18 @@
 
 (add-hook 'eww-mode-hook
 	  (lambda ()
+	    (variable-pitch-mode 1)
+	    (set-face-attribute 'variable-pitch nil
+				:family "Verdana"
+				:height 130)
+	    (setq line-spacing 0.3)
 	    (setq shr-width 60)
-	    (setq left-margin-width 12)))
+
+	    ;; margins
+	    (let ((win (get-buffer-window)))
+	      (when win
+		(set-window-margins win 16))) 
+	    ))
 
     
 
@@ -86,7 +96,8 @@
 	"https://ploum.net/atom.xml"
 	"https://protesilaos.com/master.xml"
 	"https://lettrss.com/feed.xml"
-	"https://thejollyteapot.com/feed.rss"))
+	"https://thejollyteapot.com/feed.rss"
+	"https://winnielim.org/feed/"))
 
 (setq browse-url-browser-function #'eww-browse-url)
 
@@ -102,11 +113,11 @@
 	    (setq shr-width 60)
 	    (display-line-numbers-mode -1)
 	    (variable-pitch-mode 1)
-	    (setq left-margin-width 4)
+	    (setq left-margin-width 16)
 	    (setq line-spacing 0.3)
-	    (set-face-attribute 'variable-pitch (selected-frame)
-				:family "Arial"
-				:height 140)))
+	    (set-face-attribute 'variable-pitch nil
+				:family "Verdana"
+				:height 130)))
 
 ;; Test to display Help buffer below current buffer
 ;; Reference from Prot: https://youtu.be/1-UIzYPn38s?si=TeMSeXCPk2tJM3hP
@@ -117,6 +128,5 @@
                (side . bottom)
                (slot . 0)
                (window-height . 0.5)))
-
 
 
