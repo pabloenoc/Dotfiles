@@ -84,7 +84,9 @@
 	"https://nullprogram.com/feed/"
 	"https://halloumithoughts.bearblog.dev/feed/"
 	"https://ploum.net/atom.xml"
-	"https://protesilaos.com/master.xml"))
+	"https://protesilaos.com/master.xml"
+	"https://lettrss.com/feed.xml"
+	"https://thejollyteapot.com/feed.rss"))
 
 (setq browse-url-browser-function #'eww-browse-url)
 
@@ -115,3 +117,6 @@
                (side . bottom)
                (slot . 0)
                (window-height . 0.5)))
+
+
+
