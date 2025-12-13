@@ -1,5 +1,5 @@
 ;; Emacs Init File
-;; Last Update: 2025-12-11
+;; Last Update: 2025-12-12
 ;; Pablo Enoc
 
 ;; Set Window Size on Launch
