@@ -15,8 +15,13 @@
 ;; Theme
 (setq leuven-scale-outline-headlines nil)
 (setq leuven-scale-org-document-title nil)
-(load-theme 'leuven t)
+(setq leuven-dark-scale-outline-headlines nil)
+(setq leuven-dark-scale-org-document-title nil)
 
+;; dark theme after 7:00pm
+(if (>= (string-to-number (format-time-string "%H")) 19)
+    (load-theme 'leuven-dark t)
+  (load-theme 'leuven t))
 
 ;; Disable Splash Screen
 (setq inhibit-startup-message t)
