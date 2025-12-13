@@ -70,21 +70,10 @@
 
 ;; eww
 
-(defun enocc/eww-browse-in-external-browser()
-  "Open the EWW link at point in the default external browser, or the current link if no link beneath cursor."
-  (interactive)
-  (let ((url (or (get-text-property (point) 'shr-url)
-		 (eww-current-url))))
-    (browse-url-default-browser url)))
-
 (add-hook 'eww-mode-hook
 	  (lambda ()
 	    (setq shr-width 60)
-	    (setq left-margin-width 4)
-	    (when (get-buffer-window)
-	      (set-window-margins (get-buffer-window)
-				  left-margin-width (window-margins (get-buffer-window))))
-	    (local-set-key (kbd "B" #' enocc/eww-browse-in-external-browser))))
+	    (setq left-margin-width 12)))
 
     
 
