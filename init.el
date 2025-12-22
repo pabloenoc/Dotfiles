@@ -1,9 +1,13 @@
 ;; Emacs Init File
-;; Last Update: 2025-12-12
+;; Last Update: 2025-12-22
 ;; Pablo Enoc
 
+;; MELPA
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/") t)
+
 ;; Set Window Size on Launch
-(setq default-frame-alist '((width . 124) (height . 50)))
+(setq default-frame-alist '((width . 124) (height . 42)))
 
 ;; Option Key lets me write in Spanish on macOS
 (setq mac-option-modifier nil)
@@ -12,16 +16,11 @@
 (set-face-attribute 'default nil :family "Menlo" :height 140)
 (setq-default line-spacing 0.25)
 
-;; Theme
-(setq leuven-scale-outline-headlines nil)
-(setq leuven-scale-org-document-title nil)
-(setq leuven-dark-scale-outline-headlines nil)
-(setq leuven-dark-scale-org-document-title nil)
+;; Scrollbar Disabled
+(scroll-bar-mode -1)
 
-;; dark theme after 7:00pm
-(if (>= (string-to-number (format-time-string "%H")) 19)
-    (load-theme 'leuven-dark t)
-  (load-theme 'leuven t))
+;; Theme
+(load-theme 'modus-operandi-tinted t)
 
 ;; Disable Splash Screen
 (setq inhibit-startup-message t)
@@ -32,60 +31,75 @@
 ;; Display Time in Mode Line
 (display-time-mode 1)
 
-;; Hide details in Dired mode
-(add-hook 'dired-mode-hook #'dired-hide-details-mode)
-
 ;; Vertico
 (vertico-mode 1)
 
-;; Line numbers
-(add-hook 'ruby-mode-hook
-	  (lambda ()
-	    (display-line-numbers-mode 1)))
-
+;; ido
+(ido-mode 1)
 
 ;; Custom Functions
+
+(defun enocc/rae-lookup ()
+  (interactive)
+  (browse-url
+   (concat "https://dle.rae.es/"
+	   (thing-at-point 'word t))))
 
 (defun enocc/iso-date-insert ()
   "inserts current date in YYYY-MM-DD format"
   (interactive)
   (insert (format-time-string "%Y-%m-%d")))
 
-(defun enocc/center-document ()
-  "centers document with equal block margin"
-  (interactive)
-  (setq visual-fill-column-width 80
+(defun enocc/center-writing-document ()
+  "centers document with equal block margin for writing"
+  (setq-local visual-fill-column-width 80
 	visual-fill-column-center-text t)
   (visual-line-mode 1)
   (visual-fill-column-mode 1))
 
-;; Apply enocc-center-document function
-;; to Org Mode and Markdown Mode for prose writing
+(defun enocc/center-reading-document ()
+  "centers document with equal block margin for reading"
+  (setq-local visual-fill-column-width 60
+	visual-fill-column-center-text t
+	shr-width nil)
+  (visual-line-mode 1)
+  (visual-fill-column-mode 1))
 
-(add-hook 'markdown-mode-hook #'enocc/center-document)
-(add-hook 'org-mode-hook #'enocc/center-document)
+(defun enocc/set-reading-font ()
+  "Customizations for more comfortable reading of documents"
+  (variable-pitch-mode 1)
+  (set-face-attribute 'variable-pitch nil
+		      :family "Verdana"
+		      :height 150))
 
 
-;; Configs
+;; Hooks
 
-;; eww
+(add-hook 'dired-mode-hook #'dired-hide-details-mode)
 
-(add-hook 'eww-mode-hook
+(add-hook 'markdown-mode-hook #'enocc/center-writing-document)
+(add-hook 'org-mode-hook #'enocc/center-writing-document)
+
+(add-hook 'eww-mode-hook #'enocc/set-reading-font)
+(add-hook 'eww-mode-hook #'enocc/center-reading-document)
+
+(add-hook 'nov-mode-hook #'enocc/set-reading-font)
+(add-hook 'nov-mode-hook #'enocc/center-reading-document)
+
+(add-hook 'elfeed-search-mode-hook
+	  (lambda()
+	    (setq elfeed-search-filter "@1-month-ago +unread")
+	    (setq elfeed-search-date-format '("%b %d" 10 :left))
+	    (display-line-numbers-mode -1)
+	    (elfeed-search-update :force)))
+
+(add-hook 'elfeed-show-mode-hook #'enocc/set-reading-font)
+(add-hook 'elfeed-show-mode-hook #'enocc/center-reading-document)
+
+(add-hook 'ruby-mode-hook
 	  (lambda ()
-	    (variable-pitch-mode 1)
-	    (set-face-attribute 'variable-pitch nil
-				:family "Verdana"
-				:height 130)
-	    (setq line-spacing 0.3)
-	    (setq shr-width 60)
+	    (display-line-numbers-mode 1)))
 
-	    ;; margins
-	    (let ((win (get-buffer-window)))
-	      (when win
-		(set-window-margins win 16))) 
-	    ))
-
-    
 
 ;; Elfeed
 
@@ -97,36 +111,9 @@
 	"https://protesilaos.com/master.xml"
 	"https://lettrss.com/feed.xml"
 	"https://thejollyteapot.com/feed.rss"
-	"https://winnielim.org/feed/"))
+	"https://winnielim.org/feed/"
+	"https://xn--gckvb8fzb.com/index.xml#feed"
+	))
 
 (setq browse-url-browser-function #'eww-browse-url)
-
-(add-hook 'elfeed-search-mode-hook
-	  (lambda()
-	    (setq elfeed-search-filter "@1-month-ago +unread")
-	    (setq elfeed-search-date-format '("%b %d" 10 :left))
-	    (display-line-numbers-mode -1)
-	    (elfeed-search-update :force)))
-
-(add-hook 'elfeed-show-mode-hook
-	  (lambda ()
-	    (setq shr-width 60)
-	    (display-line-numbers-mode -1)
-	    (variable-pitch-mode 1)
-	    (setq left-margin-width 16)
-	    (setq line-spacing 0.3)
-	    (set-face-attribute 'variable-pitch nil
-				:family "Verdana"
-				:height 130)))
-
-;; Test to display Help buffer below current buffer
-;; Reference from Prot: https://youtu.be/1-UIzYPn38s?si=TeMSeXCPk2tJM3hP
-
-(add-to-list 'display-buffer-alist
-             '("\\*Help\\*"
-               (display-buffer-in-side-window)
-               (side . bottom)
-               (slot . 0)
-               (window-height . 0.5)))
-
 
