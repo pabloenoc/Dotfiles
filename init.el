@@ -1,5 +1,5 @@
 ;; Emacs Init File
-;; Last Update: 2025-12-22
+;; Last Update: 2026-01-13
 ;; Pablo Enoc
 
 ;; MELPA
@@ -37,9 +37,13 @@
 ;; ido
 (ido-mode 1)
 
+;; Set 12-hr clock in Org Agenda
+(setq org-agenda-timegrid-use-ampm 1)
+
 ;; Custom Functions
 
 (defun enocc/rae-lookup ()
+  "looks up word under cursor on the DLE"
   (interactive)
   (browse-url
    (concat "https://dle.rae.es/"
@@ -70,7 +74,7 @@
   (variable-pitch-mode 1)
   (set-face-attribute 'variable-pitch nil
 		      :family "Verdana"
-		      :height 150))
+		      :height 140))
 
 
 ;; Hooks
@@ -103,6 +107,15 @@
 
 ;; Elfeed
 
+;; Open entries in a right-side window
+
+(setq elfeed-show-entry-switch 'display-buffer)
+(add-to-list 'display-buffer-alist
+	     '("\\*elfeed-entry\\*"
+	       (display-buffer-in-side-window)
+	       (side . right)
+	       (window-width . 0.67)))
+
 (setq elfeed-feeds
       '("https://thatalexguy.dev/feed.xml"
 	"https://nullprogram.com/feed/"
@@ -113,7 +126,7 @@
 	"https://thejollyteapot.com/feed.rss"
 	"https://winnielim.org/feed/"
 	"https://xn--gckvb8fzb.com/index.xml#feed"
+	"https://blog.avas.space/feed"
 	))
 
 (setq browse-url-browser-function #'eww-browse-url)
-
