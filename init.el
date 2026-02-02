@@ -1,5 +1,5 @@
 ;; Emacs Init File
-;; Last Update: 2025-02-01
+;; Last Update: 2026-02-01
 ;; Pablo Enoc
 
 ;; Bring in my terminal
