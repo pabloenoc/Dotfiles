@@ -1,13 +1,16 @@
 ;; Emacs Init File
-;; Last Update: 2026-01-13
+;; Last Update: 2025-02-01
 ;; Pablo Enoc
+
+;; Bring in my terminal
+(exec-path-from-shell-initialize)
 
 ;; MELPA
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
 
 ;; Set Window Size on Launch
-(setq default-frame-alist '((width . 124) (height . 42)))
+(setq default-frame-alist '((width . 142) (height . 46)))
 
 ;; Option Key lets me write in Spanish on macOS
 (setq mac-option-modifier nil)
@@ -20,7 +23,7 @@
 (scroll-bar-mode -1)
 
 ;; Theme
-(load-theme 'modus-operandi-tinted t)
+(load-theme 'ellas t)
 
 ;; Disable Splash Screen
 (setq inhibit-startup-message t)
@@ -42,8 +45,19 @@
 
 ;; Custom Functions
 
+(defun enocc/ddg-lookup ()
+  "Searches selected text or word in DuckDuckGo with eww browser"
+  (interactive)
+  (let ((search-term 
+         (if (use-region-p)
+             (buffer-substring-no-properties (region-beginning) (region-end))
+           (thing-at-point 'word t))))
+    (when search-term
+      (browse-url 
+       (concat "https://lite.duckduckgo.com/lite/?q=" 
+               (url-hexify-string (string-trim search-term)))))))
+
 (defun enocc/rae-lookup ()
-  "looks up word under cursor on the DLE"
   (interactive)
   (browse-url
    (concat "https://dle.rae.es/"
@@ -63,7 +77,8 @@
 
 (defun enocc/center-reading-document ()
   "centers document with equal block margin for reading"
-  (setq-local visual-fill-column-width 60
+  (interactive)
+  (setq-local visual-fill-column-width 80
 	visual-fill-column-center-text t
 	shr-width nil)
   (visual-line-mode 1)
@@ -103,7 +118,15 @@
 (add-hook 'ruby-mode-hook
 	  (lambda ()
 	    (display-line-numbers-mode 1)))
-
+(add-hook 'web-mode-hook
+	  (lambda ()
+	    (display-line-numbers-mode 1)))
+(add-hook 'php-mode-hook
+	  (lambda ()
+	    (display-line-numbers-mode 1)))
+(add-hook 'emacs-lisp-mode-hook
+	  (lambda()
+	    (display-line-numbers-mode 1)))
 
 ;; Elfeed
 
@@ -123,10 +146,10 @@
 	"https://ploum.net/atom.xml"
 	"https://protesilaos.com/master.xml"
 	"https://lettrss.com/feed.xml"
-	"https://thejollyteapot.com/feed.rss"
 	"https://winnielim.org/feed/"
 	"https://xn--gckvb8fzb.com/index.xml#feed"
 	"https://blog.avas.space/feed"
 	))
 
 (setq browse-url-browser-function #'eww-browse-url)
+
