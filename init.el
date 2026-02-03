@@ -1,5 +1,5 @@
 ;; Emacs Init File
-;; Last Update: 2026-02-01
+;; Last Update: 2025-02-03
 ;; Pablo Enoc
 
 ;; Bring in my terminal
@@ -37,11 +37,12 @@
 ;; Vertico
 (vertico-mode 1)
 
-;; ido
-(ido-mode 1)
-
 ;; Set 12-hr clock in Org Agenda
 (setq org-agenda-timegrid-use-ampm 1)
+
+;; Save backups to a dedicated backups dir
+(setq backup-directory-alist
+      '(("." . "~/.emacs.d/backups")))
 
 ;; Custom Functions
 
