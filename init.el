@@ -116,7 +116,7 @@
 
 (add-hook 'elfeed-search-mode-hook
 	  (lambda()
-	    (setq elfeed-search-filter "@1-month-ago +unread")
+	    (setq elfeed-search-filter "@1-week-ago +unread")
 	    (setq elfeed-search-date-format '("%b %d" 10 :left))
 	    (display-line-numbers-mode -1)
 	    (elfeed-search-update :force)))
