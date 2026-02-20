@@ -94,6 +94,10 @@
 		      :family "Verdana"
 		      :height 140))
 
+(defun enocc/set-line-width (desired-width)
+  "sets visual-fill-column-width value for current buffer"
+  (interactive "NLine width: ")
+  (setq-local visual-fill-column-width desired-width))
 
 ;; Hooks
 
