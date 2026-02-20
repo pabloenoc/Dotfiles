@@ -1,5 +1,5 @@
 ;; Emacs Init File
-;; Last Update: 2025-02-03
+;; Last Update: 2025-02-20
 ;; Pablo Enoc
 
 ;; Bring in my terminal
@@ -23,7 +23,9 @@
 (scroll-bar-mode -1)
 
 ;; Theme
-(load-theme 'ellas t)
+;; (load-theme 'ef-deuteranopia-dark t)
+;; (load-theme 'ef-night t)
+(load-theme 'ef-light t)
 
 ;; Disable Splash Screen
 (setq inhibit-startup-message t)
@@ -95,6 +97,12 @@
 
 ;; Hooks
 
+;; Start Emacs on Agenda View
+(add-hook 'emacs-startup-hook
+	  (lambda()
+	    (org-agenda nil "n")
+	    (delete-other-windows)))
+
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 
 (add-hook 'markdown-mode-hook #'enocc/center-writing-document)
@@ -116,15 +124,29 @@
 (add-hook 'elfeed-show-mode-hook #'enocc/set-reading-font)
 (add-hook 'elfeed-show-mode-hook #'enocc/center-reading-document)
 
-(add-hook 'ruby-mode-hook
+(add-hook 'html-mode-hook
 	  (lambda ()
 	    (display-line-numbers-mode 1)))
-(add-hook 'web-mode-hook
+
+(add-hook 'css-mode-hook
 	  (lambda ()
 	    (display-line-numbers-mode 1)))
+
 (add-hook 'php-mode-hook
 	  (lambda ()
 	    (display-line-numbers-mode 1)))
+
+(add-hook 'web-mode-hook
+	  (lambda ()
+	    (display-line-numbers-mode 1)
+	    (emmet-mode 1)
+	    (define-key emmet-mode-keymap (kbd "TAB") 'emmet-expand-line)
+	    (define-key emmet-mode-keymap (kbd "<tab>") 'emmet-expand-line)))
+
+(add-hook 'ruby-mode-hook
+	  (lambda ()
+	    (display-line-numbers-mode 1)))
+
 (add-hook 'emacs-lisp-mode-hook
 	  (lambda()
 	    (display-line-numbers-mode 1)))
@@ -133,24 +155,11 @@
 
 ;; Open entries in a right-side window
 
-(setq elfeed-show-entry-switch 'display-buffer)
-(add-to-list 'display-buffer-alist
-	     '("\\*elfeed-entry\\*"
-	       (display-buffer-in-side-window)
-	       (side . right)
-	       (window-width . 0.67)))
+;; My Elfeed Feeds
 
-(setq elfeed-feeds
-      '("https://thatalexguy.dev/feed.xml"
-	"https://nullprogram.com/feed/"
-	"https://halloumithoughts.bearblog.dev/feed/"
-	"https://ploum.net/atom.xml"
-	"https://protesilaos.com/master.xml"
-	"https://lettrss.com/feed.xml"
-	"https://winnielim.org/feed/"
-	"https://xn--gckvb8fzb.com/index.xml#feed"
-	"https://blog.avas.space/feed"
-	))
+;; (setq elfeed-feeds
+;;       '(URL
+;; 	URL
+;; 	))
 
 (setq browse-url-browser-function #'eww-browse-url)
-
