@@ -153,7 +153,7 @@
 
 ;; Elfeed
 
-;; Open entries in a right-side window
+(setq browse-url-browser-function #'eww-browse-url)
 
 ;; My Elfeed Feeds
 
@@ -162,4 +162,4 @@
 ;; 	URL
 ;; 	))
 
-(setq browse-url-browser-function #'eww-browse-url)
+
