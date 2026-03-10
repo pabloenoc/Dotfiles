@@ -1,5 +1,5 @@
 ;; Emacs Init File
-;; Last Update: 2025-02-20
+;; Last Update: 2025-03-10
 ;; Pablo Enoc
 
 ;; Bring in my terminal
@@ -66,6 +66,11 @@
    (concat "https://dle.rae.es/"
 	   (thing-at-point 'word t))))
 
+(defun enocc/insert-timestamp ()
+  "inserts current timestamp in HH:MM format"
+  (interactive)
+  (insert (format-time-string "%H:%M%P")))
+
 (defun enocc/iso-date-insert ()
   "inserts current date in YYYY-MM-DD format"
   (interactive)
@@ -98,6 +103,7 @@
   "sets visual-fill-column-width value for current buffer"
   (interactive "NLine width: ")
   (setq-local visual-fill-column-width desired-width))
+
 
 ;; Hooks
 
@@ -159,11 +165,7 @@
 
 (setq browse-url-browser-function #'eww-browse-url)
 
-;; My Elfeed Feeds
-
-;; (setq elfeed-feeds
-;;       '(URL
-;; 	URL
-;; 	))
-
-
+(setq elfeed-feeds
+      '(
+	""
+	))
