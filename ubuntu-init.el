@@ -2,7 +2,8 @@
 ;; Last Update: 2026-03-10
 ;; Pablo Enoc
 
-;; Global keybindings
+;; Global keybindings where s = Left Alt / Cmd on K480 
+(global-set-key (kbd "s-a") 'mark-whole-buffer)
 (global-set-key (kbd "s-s") 'save-buffer)  ;; Super + S to save
 (global-set-key (kbd "s-z") 'undo)          ;; Super + Z to undo
 (global-set-key (kbd "s-c") 'kill-ring-save) ;; Super + C to copy
@@ -27,7 +28,8 @@
 (scroll-bar-mode -1)
 
 ;; Theme
-(load-theme 'modus-vivendi-tinted t)
+(load-theme 'ef-light t)
+;; (load-theme 'modus-vivendi-tinted t)
 
 ;; Disable Splash Screen
 (setq inhibit-startup-message t)
@@ -81,7 +83,7 @@
 (defun enocc/center-writing-document ()
   "centers document with equal block margin for writing"
   (setq-local visual-fill-column-width 80
-	visual-fill-column-center-text t)
+	      visual-fill-column-center-text t)
   (visual-line-mode 1)
   (visual-fill-column-mode 1))
 
@@ -89,8 +91,8 @@
   "centers document with equal block margin for reading"
   (interactive)
   (setq-local visual-fill-column-width 80
-	visual-fill-column-center-text t
-	shr-width nil)
+	      visual-fill-column-center-text t
+	      shr-width nil)
   (visual-line-mode 1)
   (visual-fill-column-mode 1))
 
