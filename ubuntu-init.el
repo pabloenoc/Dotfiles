@@ -53,6 +53,27 @@
 ;; Save bookmarks any time list is updated
 (setq bookmark-save-flag 1)
 
+;; AUCTeX settings for LaTeX files
+;; -----------------------------
+(setq TeX-PDF-mode t)        ;; compile to PDF by default
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq TeX-save-query nil)
+(setq TeX-show-compilation t)
+(setq TeX-source-correlate-mode t)
+(setq TeX-source-correlate-method 'synctex)
+
+;; Use pdf-tools to view PDF
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install)
+  (setq pdf-tools-handle-updates t)
+  (add-hook 'pdf-view-mode-hook 'auto-revert-mode))
+
+;; Make PDF Tools default viewer in AUCTeX
+(setq TeX-view-program-selection '((output-pdf "PDF Tools")))
+
 ;; Custom Functions
 
 (defun enocc/ddg-lookup ()
