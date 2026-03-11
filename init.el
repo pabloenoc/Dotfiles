@@ -69,7 +69,7 @@
 (defun enocc/insert-timestamp ()
   "inserts current timestamp in HH:MM format"
   (interactive)
-  (insert (format-time-string "%H:%M%P")))
+  (insert (format-time-string "%I:%M%P")))
 
 (defun enocc/iso-date-insert ()
   "inserts current date in YYYY-MM-DD format"
