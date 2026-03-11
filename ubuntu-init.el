@@ -50,6 +50,9 @@
 (setq backup-directory-alist
       '(("." . "~/.emacs.d/backups")))
 
+;; Save bookmarks any time list is updated
+(setq bookmark-save-flag 1)
+
 ;; Custom Functions
 
 (defun enocc/ddg-lookup ()
