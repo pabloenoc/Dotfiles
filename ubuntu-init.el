@@ -108,6 +108,13 @@
   (interactive "NLine width: ")
   (setq-local visual-fill-column-width desired-width))
 
+(defun enocc/clean-appledouble-on-save ()
+  "Remove AppleDouble files in current directory when saving within /media/enoc/kyberspace"
+  (when (and buffer-file-name
+	     (string-prefix-p "/media/enoc/kyberspace"
+			      (file-truename buffer-file-name)))
+    (dolist (file (directory-files (file-name-directory buffer-file-name) t "^\\._"))
+      (delete-file file))))
 
 ;; Hooks
 
@@ -116,6 +123,8 @@
 	  (lambda()
 	    (org-agenda nil "n")
 	    (delete-other-windows)))
+
+(add-hook 'after-save-hook #'enocc/clean-appledouble-on-save)
 
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 
