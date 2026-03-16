@@ -1,5 +1,5 @@
 ;; Emacs Init File
-;; Last Update: 2025-03-10
+;; Last Update: 2025-03-16
 ;; Pablo Enoc
 
 ;; Bring in my terminal
@@ -45,6 +45,11 @@
 ;; Save backups to a dedicated backups dir
 (setq backup-directory-alist
       '(("." . "~/.emacs.d/backups")))
+
+;; Use eyebrowse for window management
+(eyebrowse-mode t)
+(global-set-key (kbd "s-<left>") #'eyebrowse-prev-window-config)
+(global-set-key (kbd "s-<right>") #'eyebrowse-next-window-config)
 
 ;; Custom Functions
 
@@ -166,6 +171,6 @@
 (setq browse-url-browser-function #'eww-browse-url)
 
 (setq elfeed-feeds
-      '(
-	""
+      '("URL1"
+	"URL2"
 	))
