@@ -1,0 +1,14 @@
+[Unit]
+Description=Stop tiny-dfr before sleep and start it after resume
+Before=sleep.target
+StopWhenUnneeded=yes
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/systemctl stop tiny-dfr.service
+ExecStop=/usr/bin/systemctl start tiny-dfr.service
+
+[Install]
+WantedBy=sleep.target
+
